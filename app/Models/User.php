@@ -12,6 +12,26 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($user) {
+            if (!$user->role_id) {
+                $user->role_id = Role::getStudentRole()->id;
+            }
+        });
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->isAdmin();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +41,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**

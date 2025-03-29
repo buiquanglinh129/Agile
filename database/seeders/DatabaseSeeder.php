@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Get student role
+        $studentRole = \App\Models\Role::where('slug', 'sinh-vien')->first();
 
         User::factory()->create([
             'name' => 'Test User',
