@@ -12,6 +12,16 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public function scopeSearch($query, $filters)
+    {
+        return $query->when($filters['name'] ?? null, function ($query, $name) {
+                $query->where('name', 'like', '%' . $name . '%');
+            })
+            ->when($filters['id'] ?? null, function ($query, $id) {
+                $query->where('id', $id);
+            });
+    }
+
     protected static function boot()
     {
         parent::boot();
