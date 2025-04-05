@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ClassRoomController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // Constructor removed as auth middleware is already applied in routes/web.php
 
     public function index()
     {
